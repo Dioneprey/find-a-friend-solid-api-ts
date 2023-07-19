@@ -15,10 +15,16 @@ enum Role {
   USER
 }
 
+enum Size {
+  SMALL
+  MID
+  LARGE
+}
+
 model User {
   id            String   @id @default(uuid()) @db.VarChar(50)
   name          String   @db.VarChar(100)
-  email         String   @db.VarChar(100)
+  email         String   @unique @db.VarChar(100)
   password_hash String   @db.VarChar(100)
   role          Role     @default(USER)
   created_at    DateTime @default(now())
@@ -26,26 +32,38 @@ model User {
   org    Org?    @relation(fields: [org_id], references: [id])
   org_id String? @db.VarChar(50)
 
-  @@index([id, name])
+  @@index([id, email])
   @@map("users")
 }
 
-model Pets {
-  id         String    @id @default(uuid()) @db.VarChar(50)
-  name       String    @db.VarChar(100)
-  age        String    @db.VarChar(3)
-  breed      String    @db.VarChar(50)
-  height     String    @db.VarChar(3) // in cm
-  weight     String    @db.VarChar(3) // in kg
-  photo      String?   @db.VarChar(500) // url
-  adopted    DateTime?
-  created_at DateTime  @default(now())
+model Pet {
+  id         String      @id @default(uuid()) @db.VarChar(50)
+  name       String      @db.VarChar(100)
+  age        Float // 0,5 = 5 months | 1 = 1 year
+  animal     String      @db.VarChar(50)
+  breed      String      @db.VarChar(50)
+  color      String      @db.VarChar(50)
+  size       Size
+  PetPhotos  PetPhotos[]
+  adopted_at DateTime?
+  created_at DateTime    @default(now())
 
   org    Org    @relation(fields: [org_id], references: [id])
   org_id String @db.VarChar(50)
 
-  @@index([id, name, breed])
+  @@index([id, animal, breed, color, size])
   @@map("pets")
+}
+
+model PetPhotos {
+  id  String @id @default(uuid()) @db.VarChar(50)
+  url String @db.VarChar(500)
+
+  pet    Pet    @relation(fields: [pet_id], references: [id])
+  pet_id String @db.VarChar(50)
+
+  @@index([id])
+  @@map("pet_photos")
 }
 
 model Org {
@@ -53,36 +71,13 @@ model Org {
   name        String  @db.VarChar(100)
   description String? @db.VarChar(200)
   phone       String  @db.VarChar(15)
-  address     String  @db.VarChar(500)
+  address     String  @db.VarChar(200)
+  city        String  @db.VarChar(100)
+  uf          String  @db.VarChar(2)
 
-  city    City @relation(fields: [city_id], references: [id])
-  city_id Int
-
-  Pets Pets[]
+  Pet  Pet[]
   User User[]
 
-  @@index([id, name, city_id])
+  @@index([id, name])
   @@map("organizations")
-}
-
-model City {
-  id   Int    @id // IBGE Code
-  name String @db.VarChar(100)
-
-  state    State @relation(fields: [state_id], references: [id])
-  state_id Int
-
-  Org Org[]
-
-  @@map("cities")
-}
-
-model State {
-  id   Int    @id
-  uf   String @db.VarChar(2)
-  name String @db.VarChar(100)
-
-  City City[]
-
-  @@map("states")
 }
