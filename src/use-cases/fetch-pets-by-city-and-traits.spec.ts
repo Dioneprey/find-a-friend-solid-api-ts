@@ -67,14 +67,10 @@ describe('Fetch Pets By City and Traits Use Case', () => {
     const { pets } = await sut.execute({
       city: 'São Paulo',
       trait: {
-        age: undefined,
         color: 'Brown',
-        animal: undefined,
-        breed: undefined,
-        size: 'LARGE',
       }, // expect one pet that have brown color
     })
-    console.log(pets)
+
     expect(pets).toHaveLength(1)
   })
 

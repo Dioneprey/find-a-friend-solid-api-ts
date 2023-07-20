@@ -21,10 +21,10 @@ export class InMemoryPetsRepository implements PetsRepository {
     if (trait) {
       const petsByCityAndTraits = allPetsByCity.filter(
         (item) =>
-          item.age === trait.age &&
-          item.animal === trait.animal &&
-          item.breed === trait.breed &&
-          item.color === trait.color &&
+          item.age === trait.age ||
+          item.animal === trait.animal ||
+          item.breed === trait.breed ||
+          item.color === trait.color ||
           item.size === trait.size,
       )
       return petsByCityAndTraits
