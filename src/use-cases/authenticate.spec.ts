@@ -1,5 +1,5 @@
 import { expect, describe, it, beforeEach } from 'vitest'
-import { compare, hash } from 'bcryptjs'
+import { hash } from 'bcryptjs'
 
 import { InMemoryUsersRepository } from 'src/repositories/in-memory/in-memory-users-repository'
 import { InvalidCredentialsError } from './errors/invalid-credentials-error'
@@ -8,7 +8,7 @@ import { AuthenticateUseCase } from './authenticate'
 let usersRepository: InMemoryUsersRepository
 let sut: AuthenticateUseCase
 
-describe('Register Use Case', () => {
+describe('Authenticate Use Case', () => {
   beforeEach(() => {
     usersRepository = new InMemoryUsersRepository()
     sut = new AuthenticateUseCase(usersRepository)
@@ -50,7 +50,7 @@ describe('Register Use Case', () => {
     await expect(() =>
       sut.execute({
         email: 'john.doe@example.com',
-        password: '123453232',
+        password: 'invalid_password',
       }),
     ).rejects.toBeInstanceOf(InvalidCredentialsError)
   })

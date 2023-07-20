@@ -1,9 +1,18 @@
-import { Pet, Prisma } from '@prisma/client'
+import { Pet, Prisma, Size } from '@prisma/client'
 
+export interface TraitsPetParams {
+  age?: number
+  animal?: string
+  breed?: string
+  color?: string
+  size?: Size
+}
 export interface PetsRepository {
   findById(id: string): Promise<Pet | null>
-  findByCharacteristics(params: string): Promise<Pet[]>
-  findManyByOrg(city: string): Promise<Pet[]>
+  findManyByOrgAndTraits(
+    org_id: string,
+    trait: TraitsPetParams | undefined,
+  ): Promise<Pet[]>
   create(data: Prisma.PetUncheckedCreateInput): Promise<Pet>
   save(pet: Pet): Promise<Pet>
 }

@@ -2,15 +2,14 @@ import { expect, describe, it, beforeEach } from 'vitest'
 
 import { InMemoryPetsRepository } from 'src/repositories/in-memory/in-memory-pets-repository'
 import { RegisterPetUseCase } from './register-pet'
-import { randomUUID } from 'crypto'
 import { InMemoryOrgsRepository } from 'src/repositories/in-memory/in-memory-orgs-repository'
-import { OrganizationNotFoundError } from './errors/organization-not-found-error'
+import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 let petsRepository: InMemoryPetsRepository
 let orgsRepository: InMemoryOrgsRepository
 let sut: RegisterPetUseCase
 
-describe('Register Use Case', () => {
+describe('Register Pet Use Case', () => {
   beforeEach(() => {
     petsRepository = new InMemoryPetsRepository()
     orgsRepository = new InMemoryOrgsRepository()
@@ -25,6 +24,7 @@ describe('Register Use Case', () => {
       address: 'Rua Principal, 123',
       city: 'São Paulo',
       uf: 'SP',
+      user_id: '123',
     })
 
     const { pet } = await sut.execute({
@@ -51,6 +51,6 @@ describe('Register Use Case', () => {
         size: 'MID',
         org_id: 'abc',
       }),
-    ).rejects.toBeInstanceOf(OrganizationNotFoundError)
+    ).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
 })

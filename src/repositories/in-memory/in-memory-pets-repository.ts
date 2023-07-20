@@ -1,5 +1,5 @@
 import { Pet, Prisma } from '@prisma/client'
-import { PetsRepository } from '../pets-repository'
+import { PetsRepository, TraitsPetParams } from '../pets-repository'
 import { randomUUID } from 'crypto'
 
 export class InMemoryPetsRepository implements PetsRepository {
@@ -8,25 +8,29 @@ export class InMemoryPetsRepository implements PetsRepository {
   async findById(id: string) {
     const pet = this.items.find((item) => item.id === id)
 
-    if (!pet) {
+    if (!pet || pet.adopted_at) {
       return null
     }
 
     return pet
   }
 
-  async findByCharacteristics(params: string) {
-    return this.items.filter(
-      (item) =>
-        item.age === parseFloat(params) ||
-        item.animal === params ||
-        item.breed === params ||
-        item.color === params,
-    )
-  }
+  async findManyByOrgAndTraits(org_id: string, trait: TraitsPetParams) {
+    const allPetsByCity = this.items.filter((item) => item.org_id === org_id)
 
-  async findManyByOrg(org_id: string) {
-    return this.items.filter((item) => item.org_id === org_id)
+    if (trait) {
+      const petsByCityAndTraits = allPetsByCity.filter(
+        (item) =>
+          item.age === trait.age &&
+          item.animal === trait.animal &&
+          item.breed === trait.breed &&
+          item.color === trait.color &&
+          item.size === trait.size,
+      )
+      return petsByCityAndTraits
+    }
+
+    return allPetsByCity
   }
 
   async create(data: Prisma.PetUncheckedCreateInput) {
@@ -39,6 +43,8 @@ export class InMemoryPetsRepository implements PetsRepository {
       color: data.color,
       size: data.size,
       org_id: data.org_id,
+      adopted_at: null,
+      created_at: new Date(),
     }
 
     this.items.push(pet)

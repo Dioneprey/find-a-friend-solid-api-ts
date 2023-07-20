@@ -34,11 +34,12 @@ export class InMemoryOrgsRepository implements OrgsRepository {
     const org = {
       id: data.id ?? randomUUID(),
       name: data.name,
-      description: data.description,
+      description: data.description ?? null,
       phone: data.phone,
       address: data.address,
       city: data.city,
       uf: data.uf,
+      user_id: data.user_id,
     }
 
     this.items.push(org)
