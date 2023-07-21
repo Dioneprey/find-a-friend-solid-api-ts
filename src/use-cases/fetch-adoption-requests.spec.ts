@@ -2,7 +2,7 @@ import { expect, describe, it, beforeEach } from 'vitest'
 
 import { AdoptionRequestsRepository } from 'src/repositories/adoption-requests-repository'
 import { InMemoryAdoptionRequestsRepository } from 'src/repositories/in-memory/in-memory-adoption-requests-repository'
-import { FetchAdoptionRequestsPetUseCase } from './fetch-adopts-request'
+import { FetchAdoptionRequestsPetUseCase } from './fetch-adoption-requests'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 let adoptionRequestsRepository: AdoptionRequestsRepository

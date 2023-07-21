@@ -33,7 +33,7 @@ export class InMemoryPetsRepository implements PetsRepository {
     return allPetsByCity
   }
 
-  async create(data: Prisma.PetUncheckedCreateInput) {
+  async create(data: Prisma.PetCreateInput) {
     const pet = {
       id: data.id ?? randomUUID(),
       name: data.name,

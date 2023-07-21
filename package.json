@@ -7,8 +7,13 @@
     "start:dev": "tsx watch src/server.ts",
     "start": "node build/server.js",
     "build": "tsup src --out-dir build",
+    "test:create-prisma-environment": "npm link ./prisma/vitest-environment-prisma",
+    "test:install-prisma-environment": "npm link vitest-environment-prisma",
     "test": "vitest run --dir src/use-cases",
-    "test:watch": "vitest --dir src/use-cases"
+    "test:watch": "vitest --dir src/use-cases",
+    "pretest:e2e": "run-s test:create-prisma-environment test:install-prisma-environment",
+    "test:e2e": "vitest run --dir src/http",
+    "test:e2e:watch": "vitest --dir src/http"
   },
   "keywords": [],
   "author": "",
@@ -17,11 +22,15 @@
     "@rocketseat/eslint-config": "^2.1.0",
     "@types/bcryptjs": "^2.4.2",
     "@types/node": "^20.4.2",
+    "@types/supertest": "^2.0.12",
     "eslint": "^8.45.0",
+    "npm-run-all": "^4.1.5",
     "prisma": "^5.0.0",
+    "supertest": "^6.3.3",
     "tsup": "^7.1.0",
     "tsxp": "^1.1.5",
     "typescript": "^5.1.6",
+    "vite-tsconfig-paths": "^4.2.0",
     "vitest": "^0.33.0"
   },
   "dependencies": {

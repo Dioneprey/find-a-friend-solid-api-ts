@@ -13,6 +13,6 @@ export interface PetsRepository {
     org_id: string,
     trait: TraitsPetParams | undefined,
   ): Promise<Pet[]>
-  create(data: Prisma.PetUncheckedCreateInput): Promise<Pet>
+  create(data: Prisma.PetCreateInput): Promise<Pet>
   save(pet: Pet): Promise<Pet>
 }
