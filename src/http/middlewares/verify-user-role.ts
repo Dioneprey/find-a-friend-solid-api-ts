@@ -2,9 +2,15 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 
 export function verifyUserRole(roleToVerify: 'USER' | 'ORG') {
   return async (request: FastifyRequest, reply: FastifyReply) => {
-    const { role } = request.user
+    try {
+      await request.jwtVerify()
 
-    if (role !== roleToVerify) {
+      const { role } = request.user
+      if (role !== roleToVerify) {
+        return reply.status(401).send({ message: 'Unauthorized.' })
+      }
+    } catch (error) {
+      console.log(error)
       return reply.status(401).send({ message: 'Unauthorized.' })
     }
   }

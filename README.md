@@ -23,5 +23,5 @@ FindAFriend app.
 ## RNFs (Requisitos não-funcionais)
 
 - [x] A senha do usuário precisa estar criptografada;
-- [] Os dados da aplicação precisam estar persistidos em um banco PostgreSQL;
-- [] O usuário deve ser identificado por um JWT (JSON Web Token);
+- [x] Os dados da aplicação precisam estar persistidos em um banco PostgreSQL;
+- [x] O usuário deve ser identificado por um JWT (JSON Web Token);

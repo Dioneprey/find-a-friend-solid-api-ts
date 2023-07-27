@@ -35,6 +35,7 @@ describe('Register Pet Use Case', () => {
       color: 'Grey',
       size: 'MID',
       org_id: org.id,
+      user_id: '123',
     })
 
     expect(pet.id).toEqual(expect.any(String))
@@ -50,6 +51,7 @@ describe('Register Pet Use Case', () => {
         color: 'Grey',
         size: 'MID',
         org_id: 'abc',
+        user_id: '123',
       }),
     ).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
