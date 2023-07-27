@@ -12,7 +12,7 @@ export async function getPetDetails(
   })
 
   const { id } = createOrgParamsSchema.parse(request.params)
-  console.log(id)
+
   const getPetDetailsUseCase = makeGetPetDetailsUseCase()
 
   try {

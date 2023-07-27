@@ -9,7 +9,7 @@ import { OrganizationHasNotPets } from './errors/organization-has-not-pets'
 
 interface FetchPetsByCityAndTraitsUseCaseRequest {
   city: string
-  trait?: TraitsPetParams
+  traits?: TraitsPetParams
 }
 
 interface FetchPetsByCityAndTraitsUseCaseResponse {
@@ -24,7 +24,7 @@ export class FetchPetsByCityAndTraitsUseCase {
 
   async execute({
     city,
-    trait,
+    traits,
   }: FetchPetsByCityAndTraitsUseCaseRequest): Promise<FetchPetsByCityAndTraitsUseCaseResponse> {
     const allOrgsByCity = await this.orgsRepository.findManyByCity(city)
 
@@ -37,7 +37,7 @@ export class FetchPetsByCityAndTraitsUseCase {
     for (const item of allOrgsByCity) {
       const pet = await this.petsRepository.findManyByOrgAndTraits(
         item.id,
-        trait || undefined,
+        traits || undefined,
       )
       pet.forEach((item) => {
         if (!item.adopted_at) {

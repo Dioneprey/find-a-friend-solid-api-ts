@@ -4,14 +4,21 @@ import { AdoptionRequestsRepository } from 'src/repositories/adoption-requests-r
 import { InMemoryAdoptionRequestsRepository } from 'src/repositories/in-memory/in-memory-adoption-requests-repository'
 import { AcceptAdoptPetRequestUseCase } from './accept-adoption-request'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
+import { OrgsRepository } from 'src/repositories/orgs.repository'
+import { InMemoryOrgsRepository } from 'src/repositories/in-memory/in-memory-orgs-repository'
 
 let adoptionRequestsRepository: AdoptionRequestsRepository
+let orgsRepository: OrgsRepository
 let sut: AcceptAdoptPetRequestUseCase
 
 describe('Accept Adoption Pet Request Use Case', () => {
   beforeEach(() => {
     adoptionRequestsRepository = new InMemoryAdoptionRequestsRepository()
-    sut = new AcceptAdoptPetRequestUseCase(adoptionRequestsRepository)
+    orgsRepository = new InMemoryOrgsRepository()
+    sut = new AcceptAdoptPetRequestUseCase(
+      adoptionRequestsRepository,
+      orgsRepository,
+    )
   })
 
   it('should be able to accept adoption pet request', async () => {

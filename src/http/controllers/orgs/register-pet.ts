@@ -1,6 +1,7 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { InvalidCredentialsError } from 'src/use-cases/errors/invalid-credentials-error'
 import { OrgAccountRequired } from 'src/use-cases/errors/org-account-required-error'
+import { ResourceNotFoundError } from 'src/use-cases/errors/resource-not-found-error'
 import { makeRegisterPetUseCase } from 'src/use-cases/factories/make-register-pet-use-case'
 import { z } from 'zod'
 
@@ -40,6 +41,7 @@ export async function registerPet(
   } catch (error) {
     if (
       error instanceof OrgAccountRequired ||
+      error instanceof ResourceNotFoundError ||
       error instanceof InvalidCredentialsError
     ) {
       return reply.status(409).send({ message: error.message })

@@ -27,7 +27,7 @@ describe('Get Pet Details (e2e)', () => {
       })
 
     const petResponse = await request(app.server)
-      .post('/pets')
+      .post('/register/pets')
       .set('Authorization', `Bearer ${token}`)
       .send({
         name: 'Akali',

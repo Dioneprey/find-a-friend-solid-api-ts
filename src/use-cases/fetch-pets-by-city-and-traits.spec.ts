@@ -66,7 +66,7 @@ describe('Fetch Pets By City and Traits Use Case', () => {
   it('should be able to fetch pets by city and traits', async () => {
     const { pets } = await sut.execute({
       city: 'São Paulo',
-      trait: {
+      traits: {
         color: 'Brown',
       }, // expect one pet that have brown color
     })

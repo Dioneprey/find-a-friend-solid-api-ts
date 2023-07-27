@@ -13,16 +13,16 @@ export class PrismaPetsRepository implements PetsRepository {
     return pet
   }
 
-  async findManyByOrgAndTraits(org_id: string, trait: TraitsPetParams) {
+  async findManyByOrgAndTraits(org_id: string, trait?: TraitsPetParams) {
     const pets = await prisma.pet.findMany({
       where: {
         org_id,
         AND: {
-          animal: trait.animal,
-          age: trait.age,
-          breed: trait.breed,
-          color: trait.color,
-          size: trait.size,
+          animal: trait?.animal,
+          age: trait?.age,
+          breed: trait?.breed,
+          color: trait?.color,
+          size: trait?.size,
         },
       },
     })
